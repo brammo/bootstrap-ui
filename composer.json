@@ -1,0 +1,71 @@
+{
+    "name": "brammo/bootstrap-ui",
+    "description": "Bootstrap helpers for CakePHP",
+    "type": "cakephp-plugin",
+    "keywords": [
+        "cakephp", 
+        "plugin", 
+        "bootstrap",
+        "helper"
+    ],
+    "homepage": "https://github.com/brammo/bootstrap-ui",
+    "authors": [
+        {
+            "name": "Roman Sidorkin",
+            "email": "roman.sidorkin@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "version": "1.0",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.1",
+        "cakephp/cakephp": "^5.0",
+        "friendsofcake/bootstrap-ui": "^5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "cakephp/cakephp-codesniffer": "^5.0",
+        "phpstan/phpstan": "^1.10",
+        "vimeo/psalm": "^5.26"
+    },
+    "autoload": {
+        "psr-4": {
+            "Brammo\\BootstrapUI\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Brammo\\BootstrapUI\\Test\\": "tests/"
+        }
+    },
+    "scripts": {
+        "check": [
+            "@test",
+            "@cs-check"
+        ],
+        "analyse": [
+            "@stan",
+            "@psalm"
+         ],
+        "cs-check": "phpcs --colors -p",
+        "cs-fix": "phpcbf --colors -p",
+        "test": "phpunit --colors=always",
+        "stan": "phpstan analyse",
+        "stan-baseline": "phpstan analyse --generate-baseline",
+        "psalm": "psalm --show-info=false",
+        "psalm-baseline": "psalm --set-baseline=psalm-baseline.xml",
+        "coverage-test": "phpunit --stderr --coverage-clover=clover.xml"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../Brammo/auth"
+        }
+    ]
+}

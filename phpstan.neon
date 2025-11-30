@@ -1,0 +1,10 @@
+parameters:
+    level: 8
+    paths:
+        - src
+    bootstrapFiles:
+        - vendor/cakephp/cakephp/src/Core/functions.php
+        - vendor/cakephp/cakephp/src/I18n/functions.php
+    excludePaths:
+        - tests
+    ignoreErrors:
