@@ -227,12 +227,42 @@ $this->Table->row([
 ]);
 ```
 
+### Row Options
+
+You can specify HTML attributes for individual rows:
+
+```php
+// Add row with attributes
+$this->Table->row([1, 'John Doe', 'john@example.com'], ['id' => 'row-1', 'class' => 'highlight']);
+$this->Table->row([2, 'Jane Smith', 'jane@example.com'], ['data-id' => '2']);
+```
+
+### Body Options
+
+You can set attributes on the `<tbody>` element using the `body()` method or via render options:
+
+```php
+// Using body() method
+$this->Table->body(['id' => 'sortable-items', 'class' => 'sortable']);
+$this->Table->row([1, 'Item 1']);
+$this->Table->row([2, 'Item 2']);
+echo $this->Table->render();
+
+// Or via render options
+$this->Table->row([1, 'Item 1']);
+$this->Table->row([2, 'Item 2']);
+echo $this->Table->render([
+    'body' => ['id' => 'sortable-items'],
+]);
+```
+
 ### Render Options
 
 ```php
 echo $this->Table->render([
     'wrapper' => ['class' => 'table-responsive-lg'],
     'table' => ['class' => 'table table-striped table-hover'],
+    'body' => ['id' => 'table-body', 'data-controller' => 'sortable'],
 ]);
 ```
 
@@ -248,7 +278,10 @@ $this->Table->header([
     ['Actions' => ['class' => 'text-end']],
 ]);
 
-// Add data rows
+// Set body options (e.g., for sortable functionality)
+$this->Table->body(['id' => 'sortable-users']);
+
+// Add data rows with individual row options
 foreach ($users as $user) {
     $status = $user->active 
         ? $this->Html->badge('Active', ['class' => 'bg-success'])
@@ -263,7 +296,7 @@ foreach ($users as $user) {
         $user->email,
         $status,
         [$actions, ['class' => 'text-end']],
-    ]);
+    ], ['data-id' => $user->id]); // Row options
 }
 
 // Render with custom table classes

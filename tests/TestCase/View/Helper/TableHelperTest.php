@@ -197,4 +197,144 @@ class TableHelperTest extends TestCase
         $this->assertStringNotContainsString('ID', $result2);
         $this->assertStringNotContainsString('John', $result2);
     }
+
+    /**
+     * Test body method with options
+     *
+     * @return void
+     */
+    public function testBodyWithOptions(): void
+    {
+        $this->Table->body(['id' => 'sortable-items', 'class' => 'sortable']);
+        $this->Table->row([1, 'John Doe']);
+        $result = $this->Table->render();
+
+        $this->assertStringContainsString('<tbody id="sortable-items" class="sortable">', $result);
+    }
+
+    /**
+     * Test body options via render method
+     *
+     * @return void
+     */
+    public function testBodyOptionsViaRender(): void
+    {
+        $this->Table->row([1, 'John Doe']);
+        $result = $this->Table->render([
+            'body' => ['id' => 'table-body', 'data-controller' => 'sortable'],
+        ]);
+
+        $this->assertStringContainsString('id="table-body"', $result);
+        $this->assertStringContainsString('data-controller="sortable"', $result);
+    }
+
+    /**
+     * Test body options are merged when set via both methods
+     *
+     * @return void
+     */
+    public function testBodyOptionsMerged(): void
+    {
+        $this->Table->body(['id' => 'my-body']);
+        $this->Table->row([1, 'John Doe']);
+        $result = $this->Table->render([
+            'body' => ['class' => 'highlight'],
+        ]);
+
+        $this->assertStringContainsString('id="my-body"', $result);
+        $this->assertStringContainsString('class="highlight"', $result);
+    }
+
+    /**
+     * Test body options are reset after render
+     *
+     * @return void
+     */
+    public function testBodyOptionsResetAfterRender(): void
+    {
+        $this->Table->body(['id' => 'sortable']);
+        $this->Table->row([1, 'John']);
+        $result1 = $this->Table->render();
+        $this->assertStringContainsString('id="sortable"', $result1);
+
+        // After render, body options should be reset
+        $this->Table->row([2, 'Jane']);
+        $result2 = $this->Table->render();
+        $this->assertStringNotContainsString('id="sortable"', $result2);
+    }
+
+    /**
+     * Test row with options
+     *
+     * @return void
+     */
+    public function testRowWithOptions(): void
+    {
+        $this->Table->row([1, 'John Doe'], ['id' => 'row-1', 'class' => 'highlight']);
+        $result = $this->Table->render();
+
+        $this->assertStringContainsString('<tr id="row-1" class="highlight">', $result);
+    }
+
+    /**
+     * Test multiple rows with different options
+     *
+     * @return void
+     */
+    public function testMultipleRowsWithOptions(): void
+    {
+        $this->Table->row([1, 'John Doe'], ['data-id' => '1', 'class' => 'odd']);
+        $this->Table->row([2, 'Jane Smith'], ['data-id' => '2', 'class' => 'even']);
+        $result = $this->Table->render();
+
+        $this->assertStringContainsString('data-id="1"', $result);
+        $this->assertStringContainsString('data-id="2"', $result);
+        $this->assertStringContainsString('class="odd"', $result);
+        $this->assertStringContainsString('class="even"', $result);
+    }
+
+    /**
+     * Test row with options and cell attributes combined
+     *
+     * @return void
+     */
+    public function testRowWithOptionsAndCellAttributes(): void
+    {
+        $this->Table->row(
+            [
+                [1, ['class' => 'id-cell']],
+                ['John Doe', ['class' => 'name-cell']],
+            ],
+            ['id' => 'row-1', 'class' => 'active']
+        );
+        $result = $this->Table->render();
+
+        $this->assertStringContainsString('<tr id="row-1" class="active">', $result);
+        $this->assertStringContainsString('class="id-cell"', $result);
+        $this->assertStringContainsString('class="name-cell"', $result);
+    }
+
+    /**
+     * Test complete table with all options
+     *
+     * @return void
+     */
+    public function testCompleteTableWithAllOptions(): void
+    {
+        $this->Table->header(['ID', 'Name']);
+        $this->Table->body(['id' => 'tbody-sortable']);
+        $this->Table->row([1, 'John'], ['data-id' => '1']);
+        $this->Table->row([2, 'Jane'], ['data-id' => '2']);
+
+        $result = $this->Table->render([
+            'table' => ['class' => 'table table-striped'],
+            'wrapper' => ['class' => 'table-responsive my-wrapper'],
+        ]);
+
+        $this->assertStringContainsString('id="tbody-sortable"', $result);
+        $this->assertStringContainsString('data-id="1"', $result);
+        $this->assertStringContainsString('data-id="2"', $result);
+        $this->assertStringContainsString('table-striped', $result);
+        $this->assertStringContainsString('my-wrapper', $result);
+    }
 }

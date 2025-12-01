@@ -61,9 +61,16 @@ class TableHelper extends Helper
     /**
      * The table body
      *
-     * @var array<int, array<int, mixed>>
+     * @var array<int, array{data: array<int, mixed>, options: array<string, mixed>}>
      */
     protected array $body = [];
+
+    /**
+     * The table body options
+     *
+     * @var array<string, mixed>
+     */
+    protected array $bodyOptions = [];
 
     /**
      * Sets up the table header
@@ -86,11 +93,23 @@ class TableHelper extends Helper
      * Adds a table row
      *
      * @param array<int, mixed> $data Row data
+     * @param array<string, mixed> $options HTML attributes for the row element
      * @return void
      */
-    public function row(array $data): void
+    public function row(array $data, array $options = []): void
     {
-        $this->body[] = $data;
+        $this->body[] = ['data' => $data, 'options' => $options];
+    }
+
+    /**
+     * Sets the body options
+     *
+     * @param array<string, mixed> $options HTML attributes for the body element
+     * @return void
+     */
+    public function body(array $options): void
+    {
+        $this->bodyOptions = $options;
     }
 
     /**
@@ -99,6 +118,7 @@ class TableHelper extends Helper
      * Options:
      * - `wrapper`: HTML attributes for the wrapper div
      * - `table`: HTML attributes for the table element
+     * - `body`: HTML attributes for the tbody element
      *
      * @param array<string, mixed> $options Options
      * @return string
@@ -106,6 +126,10 @@ class TableHelper extends Helper
     public function render(array $options = []): string
     {
         $options += $this->_defaultAttributes;
+
+        if (isset($options['body'])) {
+            $this->bodyOptions = $options['body'] + $this->bodyOptions;
+        }
 
         $templater = $this->templater();
 
@@ -172,26 +196,32 @@ class TableHelper extends Helper
         $rows = [];
         foreach ($this->body as $row) {
             $cells = [];
-            foreach ($row as $cell) {
-                $options = [];
+            foreach ($row['data'] as $cell) {
+                $cellOptions = [];
 
                 if (is_array($cell)) {
-                    $options = $cell[1];
+                    $cellOptions = $cell[1];
                     $cell = $cell[0];
                 }
 
                 $cells[] = $templater->format('bodyCell', [
-                    'attrs' => $templater->formatAttributes($options),
+                    'attrs' => $templater->formatAttributes($cellOptions),
                     'content' => $cell,
                 ]);
             }
 
-            $rows[] = $templater->format('row', ['content' => implode(' ', $cells)]);
+            $rows[] = $templater->format('row', [
+                'attrs' => $templater->formatAttributes($row['options']),
+                'content' => implode(' ', $cells),
+            ]);
         }
 
         $this->body = [];
+        $bodyOptions = $this->bodyOptions;
+        $this->bodyOptions = [];
 
         return $templater->format('body', [
+            'attrs' => $templater->formatAttributes($bodyOptions),
             'content' => implode(' ', $rows),
         ]);
     }

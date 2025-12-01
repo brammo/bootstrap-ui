@@ -21,7 +21,7 @@ class NavHelper extends Helper
     /**
      * List of helpers used by this helper
      *
-     * @var array<string, array<string, string>>
+     * @var array<array-key, mixed>
      */
     protected array $helpers = [
         'Html' => ['className' => 'BootstrapUI.Html'],
