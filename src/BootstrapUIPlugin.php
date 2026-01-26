@@ -5,7 +5,7 @@ namespace Brammo\BootstrapUI;
 
 use Cake\Core\BasePlugin;
 
-class Plugin extends BasePlugin
+class BootstrapUIPlugin extends BasePlugin
 {
     /**
      * Do bootstrapping or not
