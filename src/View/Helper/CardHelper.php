@@ -9,7 +9,7 @@ use Cake\View\StringTemplateTrait;
 /**
  * Card Helper
  *
- * @property \BootstrapUI\View\Helper\HtmlHelper $Html
+ * @extends \Cake\View\Helper<\Cake\View\View>
  */
 class CardHelper extends Helper
 {

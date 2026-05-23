@@ -124,6 +124,8 @@ The CardHelper uses the following default templates:
 | `footerAttrs` | array | HTML attributes for the footer element |
 | Other options | mixed | Applied as HTML attributes to the card element |
 
+Passing `class` (or other keys) on the card or via `*Attrs` **replaces** the default attribute for that element; include Bootstrap classes in your value when you need them (for example `'class' => 'card shadow-sm'`).
+
 ### Examples
 
 ```php

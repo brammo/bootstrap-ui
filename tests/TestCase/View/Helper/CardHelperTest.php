@@ -8,14 +8,14 @@ use Cake\TestSuite\TestCase;
 use Cake\View\View;
 
 /**
- * BootstrapUI\View\Helper\CardHelper Test Case
+ * Brammo\BootstrapUI\View\Helper\CardHelper Test Case
  */
 class CardHelperTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \BootstrapUI\View\Helper\CardHelper
+     * @var \Brammo\BootstrapUI\View\Helper\CardHelper
      */
     protected CardHelper $Card;
 
@@ -52,24 +52,11 @@ class CardHelperTest extends TestCase
         $body = 'This is card body content';
         $result = $this->Card->render($body);
 
+        $this->assertStringContainsString('class="card"', $result);
+        $this->assertStringContainsString('class="card-body"', $result);
         $this->assertStringContainsString($body, $result);
-    }
-
-    /**
-     * Test render method with custom title
-     *
-     * @return void
-     */
-    public function testRenderWithTitle(): void
-    {
-        $body = 'Card content';
-        $result = $this->Card->render($body, [
-            'title' => 'Card Title',
-        ]);
-
-        // Note: The current implementation passes title in options but card element doesn't use it
-        // This test verifies the current behavior
-        $this->assertStringContainsString($body, $result);
+        $this->assertStringNotContainsString('card-header', $result);
+        $this->assertStringNotContainsString('card-footer', $result);
     }
 
     /**
@@ -84,8 +71,9 @@ class CardHelperTest extends TestCase
             'header' => 'Custom Header',
         ]);
 
-        // The card element renders header OR body based on what's set last in element logic
-        // Since body is passed as first param, it should be rendered
+        $this->assertStringContainsString('class="card-header"', $result);
+        $this->assertStringContainsString('Custom Header', $result);
+        $this->assertStringContainsString('class="card-body"', $result);
         $this->assertStringContainsString($body, $result);
     }
 
@@ -101,12 +89,54 @@ class CardHelperTest extends TestCase
             'footer' => 'Card Footer',
         ]);
 
-        // The card element only renders the last set section (footer), not body
+        $this->assertStringContainsString('class="card-footer"', $result);
+        $this->assertStringContainsString('Card Footer', $result);
+        $this->assertStringContainsString($body, $result);
+    }
+
+    /**
+     * Test render with header, body, and footer together
+     *
+     * @return void
+     */
+    public function testRenderWithHeaderBodyAndFooter(): void
+    {
+        $body = 'Card body';
+        $result = $this->Card->render($body, [
+            'header' => 'Card Header',
+            'footer' => 'Card Footer',
+        ]);
+
+        $this->assertStringContainsString('class="card-header"', $result);
+        $this->assertStringContainsString('Card Header', $result);
+        $this->assertStringContainsString($body, $result);
+        $this->assertStringContainsString('class="card-footer"', $result);
         $this->assertStringContainsString('Card Footer', $result);
     }
 
     /**
-     * Test render method with custom classes
+     * Test section attribute options
+     *
+     * @return void
+     */
+    public function testRenderWithSectionAttributes(): void
+    {
+        $body = 'Card content';
+        $result = $this->Card->render($body, [
+            'header' => 'Header',
+            'footer' => 'Footer',
+            'headerAttrs' => ['class' => 'bg-primary text-white'],
+            'bodyAttrs' => ['class' => 'p-4'],
+            'footerAttrs' => ['class' => 'text-muted'],
+        ]);
+
+        $this->assertStringContainsString('class="bg-primary text-white"', $result);
+        $this->assertStringContainsString('class="p-4"', $result);
+        $this->assertStringContainsString('class="text-muted"', $result);
+    }
+
+    /**
+     * Test render method with custom card class
      *
      * @return void
      */
@@ -114,9 +144,11 @@ class CardHelperTest extends TestCase
     {
         $body = 'Card content';
         $result = $this->Card->render($body, [
-            'class' => ['custom-card-class'],
+            'class' => 'border-primary',
         ]);
 
+        // User class replaces default card class (mergeAttributes uses array +)
+        $this->assertStringContainsString('class="border-primary"', $result);
         $this->assertStringContainsString($body, $result);
     }
 
