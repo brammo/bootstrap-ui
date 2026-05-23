@@ -8,8 +8,8 @@ A [CakePHP](https://cakephp.org/) plugin that extends [FriendsOfCake/bootstrap-u
 ## Requirements
 
 - PHP 8.1+
-- CakePHP 5.0+
-- [FriendsOfCake/bootstrap-ui](https://github.com/FriendsOfCake/bootstrap-ui) 5.0+
+- CakePHP 5.3+
+- [FriendsOfCake/bootstrap-ui](https://github.com/FriendsOfCake/bootstrap-ui) 5.1+ (for `NavHelper` icons and URL building via `BootstrapUI.Html`)
 
 ## Installation
 
@@ -603,6 +603,10 @@ public function initialize(): void
 |-------------|-------------|
 | `{{attrs}}` | HTML attributes formatted as string |
 | `{{content}}` | Inner content |
+
+### Default attributes
+
+Helpers merge `$_defaultAttributes` with your options (`$yourAttrs + $defaults`). Your keys win; `class` is not merged automatically—set the full class string when overriding defaults.
 
 ---
 
