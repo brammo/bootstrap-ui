@@ -305,7 +305,7 @@ class TableHelperTest extends TestCase
                 [1, ['class' => 'id-cell']],
                 ['John Doe', ['class' => 'name-cell']],
             ],
-            ['id' => 'row-1', 'class' => 'active']
+            ['id' => 'row-1', 'class' => 'active'],
         );
         $result = $this->Table->render();
 
