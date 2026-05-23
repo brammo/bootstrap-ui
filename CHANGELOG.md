@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `TableHelper`: optional second parameter to `header()` for HTML attributes on the `<thead>` element
-- GitHub Actions CI workflow (PHPUnit and code style across PHP 8.1–8.3)
+- GitHub Actions CI workflow (PHPUnit and code style across PHP 8.2–8.3)
 
 ### Fixed
 
