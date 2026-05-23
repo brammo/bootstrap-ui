@@ -74,6 +74,55 @@ class TableHelperTest extends TestCase
     }
 
     /**
+     * Test header with associative cell attributes
+     *
+     * @return void
+     */
+    public function testHeaderWithAssociativeCellAttributes(): void
+    {
+        $this->Table->header([
+            ['ID' => ['class' => 'id-column']],
+            ['Name' => ['class' => 'name-column']],
+        ]);
+        $result = $this->Table->render();
+
+        $this->assertStringContainsString('class="id-column"', $result);
+        $this->assertStringContainsString('class="name-column"', $result);
+        $this->assertStringContainsString('ID', $result);
+        $this->assertStringContainsString('Name', $result);
+    }
+
+    /**
+     * Test header options on thead element
+     *
+     * @return void
+     */
+    public function testHeaderWithTheadOptions(): void
+    {
+        $this->Table->header(['ID', 'Name'], ['class' => 'table-light', 'id' => 'table-head']);
+        $result = $this->Table->render();
+
+        $this->assertStringContainsString('<thead class="table-light" id="table-head">', $result);
+    }
+
+    /**
+     * Test header options are reset after render
+     *
+     * @return void
+     */
+    public function testHeaderOptionsResetAfterRender(): void
+    {
+        $this->Table->header(['ID'], ['class' => 'table-light']);
+        $result1 = $this->Table->render();
+        $this->assertStringContainsString('class="table-light"', $result1);
+
+        $this->Table->header(['Name']);
+        $result2 = $this->Table->render();
+        $this->assertStringNotContainsString('class="table-light"', $result2);
+        $this->assertStringContainsString('Name', $result2);
+    }
+
+    /**
      * Test header with attributes
      *
      * @return void

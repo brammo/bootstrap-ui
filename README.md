@@ -161,7 +161,7 @@ echo $this->Card->render($body, [
 
 ## TableHelper
 
-Build responsive HTML tables with headers and data rows.
+Build responsive HTML tables with headers and data rows. Calling `render()` clears the header, rows, and body options so you can build another table on the same helper instance.
 
 ### Basic Usage
 
@@ -198,7 +198,18 @@ The TableHelper uses the following default templates:
 | wrapper | `table-responsive` |
 | table | `table` |
 
-### Header with Attributes
+### Header (`<thead>`) attributes
+
+Pass a second argument to `header()` for attributes on the `<thead>` element:
+
+```php
+$this->Table->header(
+    ['ID', 'Name', 'Email'],
+    ['class' => 'table-light', 'id' => 'users-head'],
+);
+```
+
+### Header cell attributes
 
 You can specify attributes for individual header cells:
 

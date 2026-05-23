@@ -8,6 +8,8 @@ use Cake\View\StringTemplateTrait;
 
 /**
  * Table Helper
+ *
+ * @phpstan-extends \Cake\View\Helper<\Cake\View\View>
  */
 class TableHelper extends Helper
 {
@@ -173,9 +175,12 @@ class TableHelper extends Helper
             ]);
         }
 
+        $headerOptions = $this->headerOptions;
         $this->header = [];
+        $this->headerOptions = [];
 
         return $templater->format('header', [
+            'attrs' => $templater->formatAttributes($headerOptions),
             'content' => $templater->format('row', ['content' => implode(' ', $cells)]),
         ]);
     }
