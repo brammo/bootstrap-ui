@@ -1,0 +1,27 @@
+---
+description: PHPUnit conventions for view helper tests
+globs: tests/TestCase/**/*.php
+alwaysApply: false
+---
+
+# Helper tests
+
+## Setup
+
+```php
+$view = new View();
+$this->Helper = new XxxHelper($view);
+```
+
+Namespace: `Brammo\BootstrapUI\Test\TestCase\View\Helper`. Extend `Cake\TestSuite\TestCase`.
+
+## Naming and assertions
+
+- Test methods: `testFeatureScenario`
+- Assert meaningful HTML: Bootstrap classes (`card`, `table-responsive`), roles, `data-bs-*`, ARIA
+- Do not keep tests for removed options (e.g. Card `title`)
+- Prefer `assertStringContainsString` for fragments; use `assertHtml()` when structure is critical (Nav tabs)
+
+## Coverage rule
+
+Any helper behavior change requires a test update or new test in the matching `*HelperTest.php`.

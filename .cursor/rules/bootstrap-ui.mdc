@@ -1,0 +1,14 @@
+---
+description: Core conventions for the brammo/bootstrap-ui CakePHP plugin
+alwaysApply: true
+---
+
+# bootstrap-ui plugin
+
+- PHP 8.1+, CakePHP 5.3+, Bootstrap 5 HTML markup
+- Small helper-only plugin: no controllers, routes, middleware, or assets unless explicitly requested
+- Match existing patterns in `src/View/Helper/` (`StringTemplateTrait`, templates, `mergeAttributes`)
+- Minimize scope; avoid drive-by refactors
+- Never commit unless the user asks
+- After edits: run `composer check` (or `composer test` for test-only changes)
+- Static analysis: `composer analyse` (PHPStan level 8 on `src/`, Psalm)

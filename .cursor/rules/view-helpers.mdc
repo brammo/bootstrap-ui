@@ -1,0 +1,23 @@
+---
+description: View helper implementation patterns
+globs: src/View/Helper/**/*.php
+alwaysApply: false
+---
+
+# View helpers
+
+## API shape
+
+- **CardHelper**: stateless `render($body, $options)` — reserved keys: `header`, `footer`, `headerAttrs`, `bodyAttrs`, `footerAttrs`; other keys → card element attrs
+- **TableHelper**: fluent `header()`, `row()`, `body()` then `render()` — clears header/body/headerOptions on render
+- **DescriptionHelper**: fluent `add()` then `render()` — clears rows on render; `list` option for `<dl>` attrs
+- **NavHelper**: fluent `add()` / `addLink()` then `render()` or `renderNav()` — only helper with `$helpers = ['Html' => ['className' => 'BootstrapUI.Html']]`
+
+## Templates
+
+Use `$_defaultConfig['templates']` and `$_defaultAttributes` with `mergeAttributes($template, $attrs)` (`$attrs + $defaults` — user keys win; `class` is replaced, not merged unless handled explicitly).
+
+## Changes
+
+- Update matching tests in `tests/TestCase/View/Helper/`
+- Update `README.md` when public options or documented behavior change
