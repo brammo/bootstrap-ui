@@ -8,6 +8,8 @@ use Cake\View\StringTemplateTrait;
 
 /**
  * Description Helper
+ *
+ * @extends \Cake\View\Helper<\Cake\View\View>
  */
 class DescriptionHelper extends Helper
 {
