@@ -5,7 +5,7 @@ declare(strict_types=1);
  * Test suite bootstrap for BootstrapUI.
  */
 
-use Brammo\BootstrapUI\Plugin as BootstrapUIPlugin;
+use Brammo\BootstrapUI\BootstrapUIPlugin;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
