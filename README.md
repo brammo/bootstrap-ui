@@ -55,6 +55,8 @@ public function initialize(): void
 }
 ```
 
+`NavHelper` uses FriendsOfCake’s `BootstrapUI.Html` helper (icons, array URLs). Load that helper in `AppView` if it is not already available from your bootstrap-ui setup.
+
 ---
 
 # View Helpers
@@ -362,7 +364,7 @@ echo $this->Description
 
 ## NavHelper
 
-Render Bootstrap 5 nav tabs or pills with built-in JavaScript tab-switching behavior. Supports both in-page tab panels (buttons) and navigational links.
+Render Bootstrap 5 nav tabs or pills with built-in JavaScript tab-switching behavior. Supports both in-page tab panels (buttons) and navigational links. Requires FriendsOfCake `BootstrapUI.Html` (see [Usage](#usage)).
 
 ### Basic Usage
 
@@ -382,6 +384,17 @@ echo $this->Nav
     ->add('tab1', 'Tab 1', 'Content 1')
     ->add('tab2', 'Tab 2', 'Content 2')
     ->render(['type' => 'pills']);
+```
+
+### Active tab
+
+The first tab is active by default. Set `'active' => true` on one tab to open a different panel; only that tab and its pane receive the active state.
+
+```php
+echo $this->Nav
+    ->add('overview', 'Overview', $overviewContent)
+    ->add('details', 'Details', $detailsContent, ['active' => true])
+    ->render();
 ```
 
 ### Tabs with Icons
@@ -430,8 +443,9 @@ echo $this->Nav
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `icon` | string | `null` | Bootstrap Icons name (e.g., `'house'`, `'gear'`) |
-| `active` | bool | `false` | Force this tab/link to be active (first tab is active by default) |
+| `active` | bool | `false` | Mark tab/link as active (`add`: first tab is active if none set; only one tab panel is active) |
 | `disabled` | bool | `false` | Disable the tab/link |
+| Other options | mixed | — | HTML attributes for the tab button (`add`) or link (`addLink`) |
 
 ### Render Options
 
@@ -474,9 +488,9 @@ The NavHelper uses the following default templates:
 The helper automatically includes proper ARIA attributes:
 
 - Nav: `role="tablist"`
-- Nav item: `role="presentation"`
-- Button: `role="tab"`, `aria-controls`, `aria-selected`
-- Tab pane: `role="tabpanel"`, `tabindex="0"`, `aria-labelledby`
+- Nav item: `role="presentation"` (tab buttons only; omitted for `addLink` items)
+- Tab button: `id="{tab-id}-tab"`, `role="tab"`, `aria-controls`, `aria-selected`
+- Tab pane: `id="{tab-id}"`, `role="tabpanel"`, `tabindex="0"`, `aria-labelledby="{tab-id}-tab"`
 - Disabled: `aria-disabled="true"`, `tabindex="-1"`
 - Active link: `aria-current="page"`
 
@@ -508,6 +522,8 @@ echo $this->Nav
 ```
 
 #### Vertical Tabs
+
+With tab panels, vertical layout wraps the nav and content in `<div class="d-flex align-items-start">` and adds `flex-column` to the nav.
 
 ```php
 echo $this->Nav

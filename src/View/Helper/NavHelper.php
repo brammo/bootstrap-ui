@@ -13,6 +13,7 @@ use Cake\View\StringTemplateTrait;
  * Supports both buttons (in-page panels) and links (navigational tabs).
  *
  * @property \BootstrapUI\View\Helper\HtmlHelper $Html
+ * @extends \Cake\View\Helper<\Cake\View\View>
  */
 class NavHelper extends Helper
 {
@@ -291,10 +292,10 @@ class NavHelper extends Helper
     {
         $templater = $this->templater();
         $items = [];
-        $isFirstTab = true;
+        $activeTabIndex = $this->getActiveTabIndex();
 
         // Render tab buttons
-        foreach ($this->tabs as $tab) {
+        foreach ($this->tabs as $index => $tab) {
             /** @var string $id */
             $id = $tab['id'];
             /** @var string $title */
@@ -306,13 +307,14 @@ class NavHelper extends Helper
             /** @var string|null $icon */
             $icon = $options['icon'] ?? null;
             /** @var bool $active */
-            $active = $options['active'] ?? ($isFirstTab ? true : false);
+            $active = $index === $activeTabIndex;
             /** @var bool $disabled */
             $disabled = $options['disabled'] ?? false;
             unset($options['icon'], $options['active'], $options['disabled']);
 
             // Build button attributes
             $buttonAttrs = $this->mergeAttributes('navButton', $options);
+            $buttonAttrs['id'] = $id . '-tab';
             $buttonAttrs['data-bs-toggle'] = 'tab';
             $buttonAttrs['data-bs-target'] = '#' . $id;
             $buttonAttrs['aria-controls'] = $id;
@@ -346,8 +348,6 @@ class NavHelper extends Helper
                 'attrs' => $templater->formatAttributes($itemAttrs),
                 'content' => $button,
             ]);
-
-            $isFirstTab = false;
         }
 
         // Render navigational links
@@ -417,19 +417,16 @@ class NavHelper extends Helper
     {
         $templater = $this->templater();
         $panes = [];
-        $isFirstTab = true;
+        $activeTabIndex = $this->getActiveTabIndex();
 
-        foreach ($this->tabs as $tab) {
+        foreach ($this->tabs as $index => $tab) {
             /** @var string $id */
             $id = $tab['id'];
             /** @var string $content */
             $content = $tab['content'];
-            /** @var array<string, mixed> $options */
-            $options = $tab['options'];
 
-            // Check if this tab is active
             /** @var bool $active */
-            $active = $options['active'] ?? ($isFirstTab ? true : false);
+            $active = $index === $activeTabIndex;
 
             // Build pane attributes
             $paneAttrs = $this->mergeAttributes('tabPane', []);
@@ -452,8 +449,6 @@ class NavHelper extends Helper
                 'attrs' => $templater->formatAttributes($paneAttrs),
                 'content' => $content,
             ]);
-
-            $isFirstTab = false;
         }
 
         // Render tab-content wrapper
@@ -463,6 +458,22 @@ class NavHelper extends Helper
             'attrs' => $templater->formatAttributes($wrapperAttrs),
             'content' => implode("\n", $panes),
         ]);
+    }
+
+    /**
+     * Index of the tab that should be active (first explicit active, else first tab)
+     *
+     * @return int
+     */
+    protected function getActiveTabIndex(): int
+    {
+        foreach ($this->tabs as $index => $tab) {
+            if (($tab['options']['active'] ?? false) === true) {
+                return $index;
+            }
+        }
+
+        return 0;
     }
 
     /**

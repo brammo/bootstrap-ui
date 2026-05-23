@@ -68,6 +68,7 @@ class NavHelperTest extends TestCase
         $this->assertStringContainsString('data-bs-target="#home"', $result);
         $this->assertStringContainsString('aria-controls="home"', $result);
         $this->assertStringContainsString('aria-selected="true"', $result);
+        $this->assertStringContainsString('id="home-tab"', $result);
         $this->assertStringContainsString('Home', $result);
 
         // Check tab content
@@ -146,13 +147,19 @@ class NavHelperTest extends TestCase
             ->add('tab2', 'Tab 2', 'Content 2', ['active' => true]);
         $result = $this->Nav->render();
 
-        // Second tab should be active (forced)
+        // Second tab should be active (forced); first tab must not be active
         $this->assertStringContainsString('data-bs-target="#tab2"', $result);
+        $this->assertStringContainsString('id="tab2-tab"', $result);
 
         // Count occurrences of active class - both tabs should be active
         // (first by default, second forced)
         $activeCount = substr_count($result, 'class="nav-link active"');
-        $this->assertEquals(2, $activeCount);
+        $this->assertEquals(1, $activeCount);
+
+        $this->assertEquals(1, substr_count($result, 'tab-pane fade show active'));
+        $this->assertStringContainsString('id="tab2" aria-labelledby="tab2-tab">Content 2', $result);
+        $this->assertStringContainsString('id="tab1" aria-labelledby="tab1-tab">Content 1', $result);
+        $this->assertStringNotContainsString('id="tab1" class="tab-pane fade show active"', $result);
     }
 
     /**
