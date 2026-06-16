@@ -12,6 +12,7 @@ alwaysApply: false
 - **TableHelper**: fluent `header()`, `row()`, `body()` then `render()` — clears header/body/headerOptions on render
 - **DescriptionHelper**: fluent `add()` then `render()` — clears rows on render; `list` option for `<dl>` attrs
 - **NavHelper**: fluent `add()` / `addLink()` then `render()` or `renderNav()` — only helper with `$helpers = ['Html' => ['className' => 'BootstrapUI.Html']]`
+- **CarouselHelper**: fluent `add()` then `render()` — clears items on render; reserved render keys: `id`, `controls`, `indicators`, `crossfade`, `autoplay`, `carouselAttrs`, `innerAttrs`, `captionAttrs`
 
 ## Templates
 
