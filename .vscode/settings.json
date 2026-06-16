@@ -1,5 +1,17 @@
 {
+    "intelephense.files.exclude": [
+        "**/.git/**",
+        "**/.svn/**",
+        "**/.hg/**",
+        "**/.CVS/**",
+        "**/.DS_Store/**",
+        "**/node_modules/**",
+        "**/vendor/**/tests/**",
+        "**/vendor/**/test/**",
+        "**/vendor/**/Tests/**"
+    ],
     "intelephense.environment.includePaths": [
-        "vendor"
+        "vendor/cakephp/cakephp",
+        "vendor/friendsofcake/bootstrap-ui"
     ]
 }
