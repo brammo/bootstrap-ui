@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-06-16
+
+### Added
+
+- `CarouselHelper` for Bootstrap 5 carousels with controls, indicators, crossfade transitions, autoplay, and per-slide captions
+- Comprehensive `CarouselHelperTest` coverage for rendering options, accessibility attributes, active item selection, and validation rules
+
+### Changed
+
+- Expanded README usage/docs with full `CarouselHelper` API, options, templates, default classes, and accessibility notes
+
 ## [1.3.0] - 2026-05-23
 
 ### Added
