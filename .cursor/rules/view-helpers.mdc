@@ -21,4 +21,4 @@ Use `$_defaultConfig['templates']` and `$_defaultAttributes` with `mergeAttribut
 ## Changes
 
 - Update matching tests in `tests/TestCase/View/Helper/`
-- Update `README.md` when public options or documented behavior change
+- Update the matching doc in `docs/` when public options or documented behavior change

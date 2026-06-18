@@ -9,7 +9,8 @@ CakePHP 5 plugin that adds Bootstrap 5 view helpers on top of [FriendsOfCake/boo
 | `src/View/Helper/` | Card, Table, Description, Nav, Carousel helpers |
 | `src/BootstrapUIPlugin.php` | Plugin class (no auto-registration of helpers) |
 | `tests/TestCase/View/Helper/` | PHPUnit tests (1:1 with helpers) |
-| `README.md` | Public API and usage examples |
+| `README.md` | Installation, loading helpers, links to docs |
+| `docs/` | Per-helper API and usage (`card.md`, `table.md`, …) |
 
 ## Commands
 
@@ -39,7 +40,7 @@ Run `composer check` after helper or test changes. Run `composer analyse` before
 - **Every behavior change needs a matching test** in `tests/TestCase/View/Helper/`
 - Assert Bootstrap markup (classes, ARIA, `data-bs-*`), not only content substrings
 - Do not commit unless the user asks
-- Update `README.md` when public options or behavior change
+- Update the matching file in `docs/` (and `README.md` if install/usage changes) when public options or behavior change
 
 ## Cursor rules
 
