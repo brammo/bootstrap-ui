@@ -20,8 +20,7 @@
     "prefer-stable": true,
     "require": {
         "php": ">=8.2",
-        "cakephp/cakephp": "^5.3",
-        "friendsofcake/bootstrap-ui": "^5.1"
+        "cakephp/cakephp": "^5.3"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^5.3",

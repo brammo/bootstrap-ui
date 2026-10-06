@@ -14,11 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- `NavHelper` icons use `IconHelper` instead of FriendsOfCake `Html::icon()`. Array URLs use CakePHP's `Url` helper
-
-### Changed
-
 - Split README helper documentation into per-helper files under `docs/` (`card.md`, `table.md`, `description.md`, `nav.md`, `carousel.md`, `template-customization.md`); README now covers installation, setup, and links to detailed docs
+- `NavHelper` icons use `IconHelper` instead of FriendsOfCake `Html::icon()`. Array URLs use CakePHP's `Url` helper
+- Removed the `friendsofcake/bootstrap-ui` dependency
 
 ## [1.4.0] - 2026-06-16
 

@@ -1,6 +1,6 @@
 # Agent guide — brammo/bootstrap-ui
 
-CakePHP 5 plugin that adds Bootstrap 5 view helpers on top of [FriendsOfCake/bootstrap-ui](https://github.com/FriendsOfCake/bootstrap-ui).
+CakePHP 5 plugin that adds Bootstrap 5 view helpers.
 
 ## Layout
 

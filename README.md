@@ -2,13 +2,12 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-A [CakePHP](https://cakephp.org/) plugin that extends [FriendsOfCake/bootstrap-ui](https://github.com/FriendsOfCake/bootstrap-ui) with additional Bootstrap 5 view helpers for building responsive UI components.
+A [CakePHP](https://cakephp.org/) plugin with Bootstrap 5 view helpers for building responsive UI components.
 
 ## Requirements
 
 - PHP 8.1+
 - CakePHP 5.3+
-- [FriendsOfCake/bootstrap-ui](https://github.com/FriendsOfCake/bootstrap-ui) 5.1+
 
 ## Installation
 
