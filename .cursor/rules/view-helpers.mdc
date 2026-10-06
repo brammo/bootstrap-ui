@@ -12,7 +12,8 @@ alwaysApply: false
 - **BadgeHelper**: stateless `render($text, $options)` and color wrappers (`primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light`, `dark`); `button($label, $text, $options)` for inline and positioned badges. Reserved render keys: `color`, `class`, `pill`, `tag`, `positioned`, `indicator`, `visuallyHidden`. `class` without `color` skips the default color class. `button()` also reserves `buttonAttrs` and `badgeAttrs`; other keys are badge options.
 - **TableHelper**: fluent `header()`, `row()`, `body()` then `render()` — clears header/body/headerOptions on render
 - **DescriptionHelper**: fluent `add()` then `render()` — clears rows on render; `list` option for `<dl>` attrs
-- **NavHelper**: fluent `add()` / `addLink()` then `render()` or `renderNav()` — only helper with `$helpers = ['Html' => ['className' => 'BootstrapUI.Html']]`
+- **NavHelper**: fluent `add()` / `addLink()` then `render()` or `renderNav()` — uses `Brammo/BootstrapUI.Icon` and Cake `Url`. Reserved item keys: `icon`, `namespace`, `prefix`, `size`, `active`, `disabled`
+- **IconHelper**: stateless `icon($name, $options)` — reserved keys: `namespace`, `prefix`, `size`, `tag`, `class`. `class` is appended to the generated icon classes. Defaults: namespace `bi`, prefix `bi`, tag `i`
 - **CarouselHelper**: fluent `add()` then `render()` — clears items on render; reserved render keys: `id`, `controls`, `indicators`, `crossfade`, `autoplay`, `carouselAttrs`, `innerAttrs`, `captionAttrs`
 
 ## Templates

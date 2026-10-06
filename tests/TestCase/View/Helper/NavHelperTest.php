@@ -273,9 +273,7 @@ class NavHelperTest extends TestCase
         $this->Nav->add('settings', 'Settings', 'Content', ['icon' => 'cog']);
         $result = $this->Nav->render();
 
-        // Icon should be rendered via Html->icon()
-        $this->assertStringContainsString('<i', $result);
-        $this->assertStringContainsString('Settings', $result);
+        $this->assertStringContainsString('<i class="bi bi-cog"></i> Settings', $result);
     }
 
     /**
@@ -333,8 +331,28 @@ class NavHelperTest extends TestCase
         $this->Nav->addLink('Settings', '/settings', ['icon' => 'cog']);
         $result = $this->Nav->renderNav();
 
-        $this->assertStringContainsString('<i', $result);
-        $this->assertStringContainsString('Settings', $result);
+        $this->assertStringContainsString('<i class="bi bi-cog"></i> Settings', $result);
+    }
+
+    /**
+     * Test a tab icon from another icon set
+     *
+     * @return void
+     */
+    public function testTabWithIconSet(): void
+    {
+        $this->Nav->add('code', 'Code', 'Content', [
+            'icon' => 'github',
+            'namespace' => 'fa-brands',
+            'prefix' => 'fa',
+            'size' => 'lg',
+        ]);
+        $result = $this->Nav->render();
+
+        $this->assertStringContainsString('<i class="fa-brands fa-github fa-lg"></i> Code', $result);
+        $this->assertStringNotContainsString('namespace=', $result);
+        $this->assertStringNotContainsString('prefix=', $result);
+        $this->assertStringNotContainsString('size=', $result);
     }
 
     /**

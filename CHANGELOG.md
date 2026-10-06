@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `BadgeHelper` for Bootstrap 5 badges, theme color wrappers, inline button badges, and positioned notification badges
+- `IconHelper` for icon-font markup with a configurable namespace and prefix (Bootstrap Icons, Font Awesome, Tabler, and other sets)
+
+### Changed
+
+- `NavHelper` icons use `IconHelper` instead of FriendsOfCake `Html::icon()`. Array URLs use CakePHP's `Url` helper
 
 ### Changed
 

@@ -8,7 +8,7 @@ A [CakePHP](https://cakephp.org/) plugin that extends [FriendsOfCake/bootstrap-u
 
 - PHP 8.1+
 - CakePHP 5.3+
-- [FriendsOfCake/bootstrap-ui](https://github.com/FriendsOfCake/bootstrap-ui) 5.1+ (for `NavHelper` icons and URL building via `BootstrapUI.Html`)
+- [FriendsOfCake/bootstrap-ui](https://github.com/FriendsOfCake/bootstrap-ui) 5.1+
 
 ## Installation
 
@@ -53,10 +53,11 @@ public function initialize(): void
     $this->loadHelper('Brammo/BootstrapUI.Nav');
     $this->loadHelper('Brammo/BootstrapUI.Carousel');
     $this->loadHelper('Brammo/BootstrapUI.Badge');
+    $this->loadHelper('Brammo/BootstrapUI.Icon');
 }
 ```
 
-`NavHelper` uses FriendsOfCake’s `BootstrapUI.Html` helper (icons, array URLs). Load that helper in `AppView` if it is not already available from your bootstrap-ui setup.
+`NavHelper` renders icons with `IconHelper` and builds array URLs with CakePHP’s `Url` helper. Load `Icon` when you render icons outside nav items. Configure its `namespace` and `prefix` to change the default icon set (see [docs/icon.md](docs/icon.md)).
 
 ## View Helpers
 
@@ -70,6 +71,7 @@ The plugin provides several view helpers. All helpers use CakePHP's `StringTempl
 | `NavHelper` | Nav tabs/pills with tab panels or links | [docs/nav.md](docs/nav.md) |
 | `CarouselHelper` | Carousels with controls, indicators, and captions | [docs/carousel.md](docs/carousel.md) |
 | `BadgeHelper` | Badges, color shortcuts, and button notification badges | [docs/badge.md](docs/badge.md) |
+| `IconHelper` | Icon-font markup for Bootstrap Icons, Font Awesome, Tabler, and other sets | [docs/icon.md](docs/icon.md) |
 
 See [docs/template-customization.md](docs/template-customization.md) for customizing helper templates at runtime or via configuration.
 

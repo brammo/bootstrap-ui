@@ -1,6 +1,6 @@
 # NavHelper
 
-Render Bootstrap 5 nav tabs or pills with built-in JavaScript tab-switching behavior. Supports both in-page tab panels (buttons) and navigational links. Requires FriendsOfCake `BootstrapUI.Html` (see [Usage](../README.md#usage) in the README).
+Render Bootstrap 5 nav tabs or pills with built-in JavaScript tab-switching behavior. Supports both in-page tab panels (buttons) and navigational links. Icons are rendered by [IconHelper](icon.md). Array URLs are built with CakePHP’s `Url` helper.
 
 ## Basic Usage
 
@@ -35,11 +35,18 @@ echo $this->Nav
 
 ## Tabs with Icons
 
+Icons use the `IconHelper` defaults (Bootstrap Icons unless you configure another set). `namespace`, `prefix`, and `size` on one item override that set and are not copied onto the button or link.
+
 ```php
 echo $this->Nav
     ->add('home', 'Home', 'Home content', ['icon' => 'house'])
     ->add('profile', 'Profile', 'Profile content', ['icon' => 'person'])
     ->add('settings', 'Settings', 'Settings content', ['icon' => 'gear'])
+    ->add('code', 'Code', 'Code content', [
+        'icon' => 'github',
+        'namespace' => 'fa-brands',
+        'prefix' => 'fa',
+    ])
     ->render();
 ```
 
@@ -78,7 +85,10 @@ echo $this->Nav
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `icon` | string | `null` | Bootstrap Icons name (e.g., `'house'`, `'gear'`) |
+| `icon` | string | `null` | Icon name rendered by [IconHelper](icon.md) (e.g., `'house'`, `'gear'`) |
+| `namespace` | string | IconHelper default | Icon set class for this item (e.g., `'fa-brands'`, `'ti'`) |
+| `prefix` | string | IconHelper default | Icon class prefix for this item (e.g., `'fa'`, `'ti'`) |
+| `size` | string | `null` | Icon size token for this item (e.g., `'lg'`) |
 | `active` | bool | `false` | Mark tab/link as active (`add`: first tab is active if none set; only one tab panel is active) |
 | `disabled` | bool | `false` | Disable the tab/link |
 | Other options | mixed | — | HTML attributes for the tab button (`add`) or link (`addLink`) |

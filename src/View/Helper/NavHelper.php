@@ -12,7 +12,8 @@ use Cake\View\StringTemplateTrait;
  * Renders Bootstrap 5 nav tabs or pills with JavaScript tab-switching behavior.
  * Supports both buttons (in-page panels) and links (navigational tabs).
  *
- * @property \BootstrapUI\View\Helper\HtmlHelper $Html
+ * @property \Brammo\BootstrapUI\View\Helper\IconHelper $Icon
+ * @property \Cake\View\Helper\UrlHelper $Url
  * @extends \Cake\View\Helper<\Cake\View\View>
  */
 class NavHelper extends Helper
@@ -22,10 +23,11 @@ class NavHelper extends Helper
     /**
      * List of helpers used by this helper
      *
-     * @var array<array-key, mixed>
+     * @var array<int|string, string|array<string, mixed>>
      */
     protected array $helpers = [
-        'Html' => ['className' => 'BootstrapUI.Html'],
+        'Url',
+        'Brammo/BootstrapUI.Icon',
     ];
 
     /**
@@ -99,7 +101,10 @@ class NavHelper extends Helper
      * Add a tab with panel content
      *
      * Options:
-     * - `icon`: Icon name to display before the title (uses Html->icon())
+     * - `icon`: Icon name to display before the title (uses IconHelper)
+     * - `namespace`: Icon set class for this item (for example `fa-solid` or `ti`)
+     * - `prefix`: Icon class prefix for this item (for example `fa` or `ti`)
+     * - `size`: Icon size token for this item
      * - `active`: Force this tab to be active (default: first tab is active)
      * - `disabled`: Disable this tab
      * - Any other options are used as HTML attributes for the button element
@@ -126,7 +131,10 @@ class NavHelper extends Helper
      * Add a navigational link (no panel content)
      *
      * Options:
-     * - `icon`: Icon name to display before the title (uses Html->icon())
+     * - `icon`: Icon name to display before the title (uses IconHelper)
+     * - `namespace`: Icon set class for this item (for example `fa-solid` or `ti`)
+     * - `prefix`: Icon class prefix for this item (for example `fa` or `ti`)
+     * - `size`: Icon size token for this item
      * - `active`: Mark this link as active
      * - `disabled`: Disable this link
      * - Any other options are used as HTML attributes for the link element
@@ -306,11 +314,19 @@ class NavHelper extends Helper
             // Extract special options
             /** @var string|null $icon */
             $icon = $options['icon'] ?? null;
+            $iconOptions = $this->iconOptions($options);
             /** @var bool $active */
             $active = $index === $activeTabIndex;
             /** @var bool $disabled */
             $disabled = $options['disabled'] ?? false;
-            unset($options['icon'], $options['active'], $options['disabled']);
+            unset(
+                $options['icon'],
+                $options['namespace'],
+                $options['prefix'],
+                $options['size'],
+                $options['active'],
+                $options['disabled'],
+            );
 
             // Build button attributes
             $buttonAttrs = $this->mergeAttributes('navButton', $options);
@@ -334,7 +350,7 @@ class NavHelper extends Helper
             $buttonAttrs['class'] = implode(' ', $buttonClasses);
 
             // Build title with icon
-            $titleContent = $this->buildTitle($title, $icon);
+            $titleContent = $this->buildTitle($title, $icon, $iconOptions);
 
             // Render button
             $button = $templater->format('navButton', [
@@ -362,15 +378,23 @@ class NavHelper extends Helper
             // Extract special options
             /** @var string|null $icon */
             $icon = $options['icon'] ?? null;
+            $iconOptions = $this->iconOptions($options);
             /** @var bool $active */
             $active = $options['active'] ?? false;
             /** @var bool $disabled */
             $disabled = $options['disabled'] ?? false;
-            unset($options['icon'], $options['active'], $options['disabled']);
+            unset(
+                $options['icon'],
+                $options['namespace'],
+                $options['prefix'],
+                $options['size'],
+                $options['active'],
+                $options['disabled'],
+            );
 
             // Build link attributes
             $linkAttrs = $this->mergeAttributes('navLink', $options);
-            $linkAttrs['href'] = is_array($url) ? $this->Html->Url->build($url) : $url;
+            $linkAttrs['href'] = is_array($url) ? $this->Url->build($url) : $url;
 
             // Add active/disabled classes
             $linkClasses = ['nav-link'];
@@ -386,7 +410,7 @@ class NavHelper extends Helper
             $linkAttrs['class'] = implode(' ', $linkClasses);
 
             // Build title with icon
-            $titleContent = $this->buildTitle($title, $icon);
+            $titleContent = $this->buildTitle($title, $icon, $iconOptions);
 
             // Render link
             $linkHtml = $templater->format('navLink', [
@@ -477,19 +501,38 @@ class NavHelper extends Helper
     }
 
     /**
+     * Icon options for one tab or link.
+     *
+     * @param array<string, mixed> $options Tab or link options.
+     * @return array<string, mixed>
+     */
+    protected function iconOptions(array $options): array
+    {
+        $iconOptions = [];
+        foreach (['namespace', 'prefix', 'size'] as $key) {
+            if (array_key_exists($key, $options)) {
+                $iconOptions[$key] = $options[$key];
+            }
+        }
+
+        return $iconOptions;
+    }
+
+    /**
      * Build title with optional icon
      *
      * @param string $title The title text
      * @param string|null $icon Optional icon name
+     * @param array<string, mixed> $iconOptions Namespace, prefix, and size for this icon
      * @return string
      */
-    protected function buildTitle(string $title, ?string $icon): string
+    protected function buildTitle(string $title, ?string $icon, array $iconOptions = []): string
     {
         if ($icon === null) {
             return $title;
         }
 
-        return $this->Html->icon($icon) . ' ' . $title;
+        return $this->Icon->icon($icon, $iconOptions) . ' ' . $title;
     }
 
     /**
