@@ -9,6 +9,7 @@ alwaysApply: false
 ## API shape
 
 - **CardHelper**: stateless `render($body, $options)` — reserved keys: `header`, `footer`, `headerAttrs`, `bodyAttrs`, `footerAttrs`; other keys → card element attrs
+- **BadgeHelper**: stateless `render($text, $options)` and color wrappers (`primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light`, `dark`); `button($label, $text, $options)` for inline and positioned badges. Reserved render keys: `color`, `class`, `pill`, `tag`, `positioned`, `indicator`, `visuallyHidden`. `class` without `color` skips the default color class. `button()` also reserves `buttonAttrs` and `badgeAttrs`; other keys are badge options.
 - **TableHelper**: fluent `header()`, `row()`, `body()` then `render()` — clears header/body/headerOptions on render
 - **DescriptionHelper**: fluent `add()` then `render()` — clears rows on render; `list` option for `<dl>` attrs
 - **NavHelper**: fluent `add()` / `addLink()` then `render()` or `renderNav()` — only helper with `$helpers = ['Html' => ['className' => 'BootstrapUI.Html']]`

@@ -52,6 +52,7 @@ public function initialize(): void
     $this->loadHelper('Brammo/BootstrapUI.Description');
     $this->loadHelper('Brammo/BootstrapUI.Nav');
     $this->loadHelper('Brammo/BootstrapUI.Carousel');
+    $this->loadHelper('Brammo/BootstrapUI.Badge');
 }
 ```
 
@@ -68,6 +69,7 @@ The plugin provides several view helpers. All helpers use CakePHP's `StringTempl
 | `DescriptionHelper` | Description lists (`<dl>`) for key-value pairs | [docs/description.md](docs/description.md) |
 | `NavHelper` | Nav tabs/pills with tab panels or links | [docs/nav.md](docs/nav.md) |
 | `CarouselHelper` | Carousels with controls, indicators, and captions | [docs/carousel.md](docs/carousel.md) |
+| `BadgeHelper` | Badges, color shortcuts, and button notification badges | [docs/badge.md](docs/badge.md) |
 
 See [docs/template-customization.md](docs/template-customization.md) for customizing helper templates at runtime or via configuration.
 

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `BadgeHelper` for Bootstrap 5 badges, theme color wrappers, inline button badges, and positioned notification badges
+
 ### Changed
 
 - Split README helper documentation into per-helper files under `docs/` (`card.md`, `table.md`, `description.md`, `nav.md`, `carousel.md`, `template-customization.md`); README now covers installation, setup, and links to detailed docs

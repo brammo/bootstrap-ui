@@ -6,7 +6,7 @@ CakePHP 5 plugin that adds Bootstrap 5 view helpers on top of [FriendsOfCake/boo
 
 | Path | Purpose |
 |------|---------|
-| `src/View/Helper/` | Card, Table, Description, Nav, Carousel helpers |
+| `src/View/Helper/` | Card, Table, Description, Nav, Carousel, Badge helpers |
 | `src/BootstrapUIPlugin.php` | Plugin class (no auto-registration of helpers) |
 | `tests/TestCase/View/Helper/` | PHPUnit tests (1:1 with helpers) |
 | `README.md` | Installation, loading helpers, links to docs |
@@ -28,7 +28,7 @@ Run `composer check` after helper or test changes. Run `composer analyse` before
 `BootstrapUIPlugin` does **not** register helpers. Host apps must:
 
 1. `$this->addPlugin('Brammo/BootstrapUI')` in `Application.php`
-2. `$this->loadHelper('Brammo/BootstrapUI.Card')` (and Table, Description, Nav, Carousel) in `AppView::initialize()`
+2. `$this->loadHelper('Brammo/BootstrapUI.Card')` (and Table, Description, Nav, Carousel, Badge) in `AppView::initialize()`
 
 `NavHelper` depends on FoC `BootstrapUI.Html` for icons and URL building.
 
